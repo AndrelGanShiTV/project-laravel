@@ -17,6 +17,8 @@ class ProductController extends Controller
         $perPage = $request->query('per_page', 10);
         $products = Product::with('ProductVariant')->paginate($perPage);
 
+
+
         $products->transform(function ($product) {
             $product->OtherAttributes = json_decode($product->OtherAttributes, true);
             return $product;
