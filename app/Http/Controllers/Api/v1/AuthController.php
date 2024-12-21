@@ -64,6 +64,16 @@ class AuthController extends Controller
         );
     }
 
+    public function profile(Request $request)
+    {
+        $user = $request->user();
+        return response()->json([
+            'success' => true,
+            'message' => 'User profile fetched successfully',
+            'data' => $user
+        ], 200);
+    }
+
     public function logout(Request $request)
     {
         //Revoke all tokens...

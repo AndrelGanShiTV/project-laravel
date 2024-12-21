@@ -11,10 +11,10 @@ class CartItem extends Model
     use HasFactory;
 
     protected $fillable = [
-        'order_id',
+        'shopping_cart_id',
         'product_variant_id',
         'Quantity',
-        'Price',
+        'UnitPrice',
     ];
 
     public function ShoppingCart()

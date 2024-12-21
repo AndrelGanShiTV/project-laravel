@@ -5,7 +5,11 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Models\ProductVariant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
@@ -14,56 +18,127 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $perPage = $request->query('per_page', 10);
-        $products = Product::with('ProductVariant')->paginate($perPage);
+        try {
+            $perPage = $request->query('per_page', 10);
+            $products = Product::with('ProductVariant')->paginate($perPage);
 
+            if ($products->isEmpty()) {
+                return response()->json(['message' => 'Products Not Found'], 404);
+            }
 
+            return response()->json($products, 200);
+        } catch (\Throwable $tr) {
 
-        $products->transform(function ($product) {
-            $product->OtherAttributes = json_decode($product->OtherAttributes, true);
-            return $product;
-        });
+            Log::error('Error Getting Products: ' . $tr->getMessage(), [
+                'stack' => $tr->getTraceAsString(),
+            ]);
 
-        return response()->json($products, 200);
+            return response()->json([
+                'error' => 'Error Getting Products',
+                'message' => $tr->getMessage()
+            ], 500);
+        }
     }
     /**
      * Get Method: Get a Product
      */
     public function show(int $id)
     {
-        $product = Product::find($id);
-        $product->OtherAttributes = json_decode($product->OtherAttributes, true);
+        try {
+            $product = Product::findOrFail($id);
+            return response()->json($product, 200);
+        } catch (ModelNotFoundException $e) {
 
-        return response()->json($product, 200);
+            Log::error('Error Getting Product: ' . $e->getMessage(), [
+                'product_id' => $id,
+                'stack' => $e->getTraceAsString(),
+            ]);
+
+            return response()->json([
+                'error' => 'Product Not Found',
+                'message' => $e->getMessage()
+            ], 404);
+        }
     }
     /**
      * POST Method: Create a Product
      */
     public function store(Request $request)
     {
-        $request['OtherAttributes'] = json_encode($request->OtherAttributes);
-        $product = Product::create($request->all());
-        return response()->json($product, 201);
+        DB::beginTransaction();
+
+        try {
+            $productData = $request->only(['name', 'description', 'price', 'other_attributes']);
+            $product = Product::create($productData);
+
+            if ($request->has('variants')) {
+                $variants = $request->input('variants');
+                $product->ProductVariant()->createMany($variants);
+                foreach ($variants as $variant) {
+                    $variant['product_id'] = $product->id;
+                    ProductVariant::create($variant);
+                }
+            }
+
+            DB::commit();
+
+            return response()->json($product->load('variants'), 201);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            Log::error('Error Creating Product and Variants: ' . $e->getMessage(), [
+                'stack' => $e->getTraceAsString(),
+                'input' => $request->all(),
+            ]);
+
+            return response()->json(['error' => 'Failed to Create Product'], 500);
+        }
     }
     /**
      * PUT Method: Update a Product
      */
     public function update(Request $request, int $id)
     {
-        $product = Product::find($id);
-        $product->update($request->all());
-        return response()->json($product, 200);
+        try {
+            $product = Product::findOrFail($id);
+            $product->update($request->all());
+            return response()->json($product, 200);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'error' => 'Product Not Found',
+                'message' => $e->getMessage()
+            ], 404);
+        } catch (\Throwable $tr) {
+            return response()->json([
+                'error' => 'Failed to Update Product',
+                'message' => $tr->getMessage()
+            ], 500);
+        }
     }
     /**
      * DELETE Method: Delete a Product
      */
     public function destroy(int $id)
     {
-        $product = Product::find($id);
-        $product->delete();
-        return response()->noContent();
+        try {
+            $product = Product::findOrFail($id);
+            $product->delete();
+            return response()->noContent();
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'error' => 'Product Not Found',
+                'message' => $e->getMessage()
+            ], 404);
+        } catch (\Throwable $tr) {
+            return response()->json([
+                'error' => 'Failed to Delete Product',
+                'message' => $tr->getMessage()
+            ], 500);
+        }
     }
-
+    /**
+     * GET Method: Search a Product
+     */
     public function search(Request $request)
     {
         $query = Product::with('ProductVariant');

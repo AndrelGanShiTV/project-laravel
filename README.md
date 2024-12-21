@@ -1,4 +1,4 @@
-# 🚀 My Laravel Project
+# 🚀 SQR-1 Academy Project ()
 
 This project is a web application built with the **Laravel** framework and using **Herd** to run locally.
 
@@ -29,7 +29,7 @@ git clone https://github.com/AndrelGanShiTV/SQR-Academy-BackEnd.git
 ### 2️⃣ **Access the project folder**
 
 ```bash
-cd project-laravel
+cd SQR-Academy-BackEnd
 ```
 
 ---
@@ -142,3 +142,264 @@ If you want to contribute to this project, follow these steps:
 5. Create a **Pull Request**.
 
 ---
+
+# API Documentation
+
+## **Users**
+
+### **1. Register a New User**
+
+**Endpoint:** `POST /register`
+
+**Description:**
+Registers a new user by providing the required details.
+
+**Request Body:**
+
+```json
+{
+    "name": "string",
+    "email": "string",
+    "password": "string"
+}
+```
+
+**Response:**
+
+-   **201 Created:** User successfully registered.
+-   **400 Bad Request:** Validation errors.
+
+---
+
+### **2. Login User**
+
+**Endpoint:** `POST /login`
+
+**Description:**
+Authenticates the user and returns an access token.
+
+**Request Body:**
+
+```json
+{
+    "email": "string",
+    "password": "string"
+}
+```
+
+**Response:**
+
+-   **200 OK:** User authenticated.
+-   **401 Unauthorized:** Invalid credentials.
+
+---
+
+### **3. Get Authenticated User Profile**
+
+**Endpoint:** `GET /profile`
+
+**Description:**
+Returns the profile information of the authenticated user.
+
+**Authorization:**
+
+-   Requires Sanctum authentication.
+
+**Response:**
+
+-   **200 OK:** Returns user details.
+-   **401 Unauthorized:** User is not authenticated.
+
+---
+
+### **4. Logout User**
+
+**Endpoint:** `POST /logout`
+
+**Description:**
+Logs out the authenticated user and invalidates the access token.
+
+**Authorization:**
+
+-   Requires Sanctum authentication.
+
+**Response:**
+
+-   **200 OK:** User successfully logged out.
+
+---
+
+## **Shopping Cart**
+
+### **1. View Shopping Cart**
+
+**Endpoint:** `GET /cart`
+
+**Description:**
+Returns the contents of the authenticated user's shopping cart.
+
+**Authorization:**
+
+-   Requires Sanctum authentication.
+
+**Response:**
+
+-   **200 OK:** Returns cart details.
+-   **401 Unauthorized:** User is not authenticated.
+
+---
+
+### **2. Add Product to Cart**
+
+**Endpoint:** `POST /cart/add`
+
+**Description:**
+Adds a product variant to the authenticated user's shopping cart.
+
+**Request Body:**
+
+```json
+{
+    "variant_id": "integer",
+    "quantity": "integer"
+}
+```
+
+**Response:**
+
+-   **200 OK:** Product added to cart.
+-   **400 Bad Request:** Validation errors or insufficient stock.
+
+---
+
+### **3. Update Product Quantity in Cart**
+
+**Endpoint:** `PUT /cart/update/{CartItemID}`
+
+**Description:**
+Updates the quantity of a product variant in the shopping cart.
+
+**Request Body:**
+
+```json
+{
+    "quantity": "integer"
+}
+```
+
+**Response:**
+
+-   **200 OK:** Product quantity updated.
+-   **404 Not Found:** Cart item not found.
+
+---
+
+### **4. Remove Product from Cart**
+
+**Endpoint:** `DELETE /cart/remove/{CartItemID}`
+
+**Description:**
+Removes a product variant from the shopping cart.
+
+**Response:**
+
+-   **200 OK:** Product removed from cart.
+-   **404 Not Found:** Cart item not found.
+
+---
+
+## **Products and Product Variants**
+
+### **1. List All Products**
+
+**Endpoint:** `GET /products`
+
+**Description:**
+Returns a list of all available products along with their variants.
+
+**Response:**
+
+-   **200 OK:** Returns a list of products and variants.
+
+---
+
+### **2. Get Product Details**
+
+**Endpoint:** `GET /products/{ProductID}`
+
+**Description:**
+Returns details of a specific product, including its variants.
+
+**Response:**
+
+-   **200 OK:** Returns product details.
+-   **404 Not Found:** Product not found.
+
+---
+
+## **Orders**
+
+### **1. Create a New Order**
+
+**Endpoint:** `POST /orders/create`
+
+**Description:**
+Creates an order based on the contents of the authenticated user's shopping cart.
+
+**Authorization:**
+
+-   Requires Sanctum authentication.
+
+**Request Body:**
+
+```json
+{
+    "PaymentMethod": "string",
+    "ShippingAddress": "string"
+}
+```
+
+**Validation:**
+
+-   Orders cannot be created if the shopping cart is empty.
+
+**Response:**
+
+-   **201 Created:** Order successfully created.
+-   **400 Bad Request:** Shopping cart is empty.
+
+---
+
+### **2. List All Orders**
+
+**Endpoint:** `GET /orders`
+
+**Description:**
+Lists all orders placed by the authenticated user.
+
+**Authorization:**
+
+-   Requires Sanctum authentication.
+
+**Response:**
+
+-   **200 OK:** Returns a list of orders.
+-   **401 Unauthorized:** User is not authenticated.
+
+---
+
+### **3. Get Order Details**
+
+**Endpoint:** `GET /orders/{OrderID}`
+
+**Description:**
+Returns details of a specific order placed by the authenticated user.
+
+**Authorization:**
+
+-   Requires Sanctum authentication.
+
+**Response:**
+
+-   **200 OK:** Returns order details.
+-   **404 Not Found:** Order not found or does not belong to the user.
