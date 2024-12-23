@@ -29,7 +29,7 @@ git clone https://github.com/AndrelGanShiTV/SQR-Academy-BackEnd.git
 ### 2️⃣ **Access the project folder**
 
 ```bash
-cd SQR-Academy-BackEnd
+cd project-laravel
 ```
 
 ---
