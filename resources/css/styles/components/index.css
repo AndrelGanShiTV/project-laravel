@@ -1,0 +1,29 @@
+@import "./header.css";
+@import "./footer.css";
+@import "./new-arrivals.css";
+@import "./product-card.css";
+@import "./hot-sales-banner.css";
+@import "./season-banner.css";
+@import "./brands.css";
+@import "./benefits.css";
+@import "./shop-page.css";
+@import "./product-card-shop.css";
+@import "./filter-shop.css";
+@import "./product-page.css";
+@import "./dropdown-cart.css";
+@import "./cart-page.css";
+@import "./checkout-page.css";
+
+.main {
+  width: 100%;
+  /* max-width: 1280px; */
+  min-height: calc(100dvh - 200px);
+  box-sizing: border-box;
+  margin-inline: auto;
+}
+
+main {
+  position: relative;
+  min-height: calc(100dvh - 200px);
+  overflow-x: hidden;
+}

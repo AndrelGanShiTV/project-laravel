@@ -16,7 +16,7 @@ class ProductVariantFactory extends Factory
     {
         return [
             'product_id' => $this->faker->randomElement(Product::pluck('id')->toArray()),
-            'Color' => $this->faker->hexColor(),
+            'Color' => $this->faker->colorName(),
             'Size' => $this->faker->randomElement(['S', 'M', 'L', 'XL']),
             'StockQuantity' => $this->faker->numberBetween(1, 40),
         ];

@@ -21,6 +21,10 @@ class ProductController extends Controller
         try {
             $perPage = $request->query('per_page', 10);
             $products = Product::with('ProductVariant')->paginate($perPage);
+            $products->transform(function ($product) {
+                $product->OtherAttributes = json_decode($product->OtherAttributes, true);
+                return $product;
+            });
 
             if ($products->isEmpty()) {
                 return response()->json(['message' => 'Products Not Found'], 404);
@@ -166,6 +170,13 @@ class ProductController extends Controller
             $color = $request->input('color');
             $query->whereHas('ProductVariant', function (Builder $q) use ($color) {
                 $q->where('color', $color);
+            });
+        }
+
+        if ($request->has('size')) {
+            $size = $request->input('size');
+            $query->whereHas('ProductVariant', function (Builder $q) use ($size) {
+                $q->where('size', $size);
             });
         }
 

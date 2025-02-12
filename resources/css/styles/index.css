@@ -1,0 +1,34 @@
+@import "./reset.css";
+@import "../fonts/fonts.css";
+@import "./components/index.css";
+
+:root {
+    font-size: 8px;
+    /* Colors */
+    --color-primary: #ed1c24;
+    --color-black: #000000;
+    --color-white: #ffffff;
+    --color-dark-gray: #8a8a8a;
+    --color-darker-gray: #cccccc;
+    --color-lighter-gray: #fafafa;
+    --color-light-gray: #f1f1f1;
+    --color-links: #1456ff;
+}
+
+p,
+a,
+span {
+    font-size: 1.6rem;
+}
+
+* {
+    font-family: "Poppins", sans-serif;
+}
+
+img-logo {
+    display: block;
+}
+
+.icon {
+    stroke: currentColor;
+}

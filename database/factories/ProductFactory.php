@@ -19,6 +19,8 @@ class ProductFactory extends Factory
             'OtherAttributes' => json_encode([
                 'weight' => $this->faker->numberBetween(5, 1000) . 'g',
                 'material' => $this->faker->word,
+                'brand' => $this->faker->randomElement(['Minimog', 'Retrolie', 'Brook', 'Learts', 'Vagabond', 'Abby']),
+                'category' => $this->faker->randomElement(['men fashion', 'women fashion', 'women accesories', 'men accesories', 'discount deals']),
             ])
         ];
     }

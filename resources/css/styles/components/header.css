@@ -1,0 +1,157 @@
+/* --- Estilo general del header (sin cambios) --- */
+header > .main-header {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 2rem;
+  box-sizing: border-box;
+  border-bottom: solid 1px var(--color-darker-gray);
+}
+
+.header-logo-box {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.header-icons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.25rem;
+  transition: all 150ms;
+}
+
+.header-icon {
+  display: block;
+  width: 3.5rem;
+  height: 3.5rem;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  transition: all 150ms;
+  color: var(--color-black);
+}
+
+.header-icon:hover {
+  color: var(--color-primary);
+}
+
+/* --- Modificación de header-nav para el dropdown --- */
+.header-nav {
+  display: none; /* Oculto por defecto en pantallas pequeñas */
+}
+
+.header-nav.active {
+  display: flex;
+  background-color: var(--color-lighter-gray);
+  width: 80%;
+  flex-direction: column; /* Para pantallas móviles, los enlaces estarán en columna */
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: -100%; /* Fuera de la pantalla por la parte superior */
+  left: 0;
+  height: 100vh; /* Ocupa toda la altura de la pantalla */
+  padding: 2rem;
+  border-top: solid 1px var(--color-darker-gray);
+  border-bottom: solid 1px var(--color-darker-gray);
+  transition: top 0.3s ease-in-out; /* Transición para mostrar el dropdown */
+  z-index: 999; /* Se asegura de que esté encima de todo */
+  top: 0; /* Se muestra desde arriba al 100% de la pantalla */
+}
+
+.header-nav > .nav-item {
+  text-transform: uppercase;
+  color: var(--color-black);
+  transition: all 150ms;
+  font-family: "poppins";
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.75rem;
+  padding: 1rem 0;
+}
+
+.header-nav > .nav-item:hover {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.menu-btn {
+  display: block;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: all 150ms;
+}
+
+.menu-btn .header-icon {
+  width: 3rem;
+  height: 3rem;
+}
+
+.header-close-nav {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  transition: all 0.3s;
+}
+
+.header-close-nav:hover {
+  color: var(--color-primary);
+}
+
+@media screen and (min-width: 768px) {
+  .menu-btn {
+    display: none;
+  }
+
+  .header-icons {
+    gap: 1rem;
+  }
+
+  .header-icon {
+    width: 4rem;
+    height: 4rem;
+  }
+
+  .header-nav {
+    display: flex !important; /* Se muestra siempre en pantallas grandes */
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 3.5rem;
+    padding: 0.5rem;
+    position: static; /* No se fija en pantallas grandes */
+    height: auto;
+    border-bottom: solid 1px var(--color-darker-gray);
+    border-top: solid 1px var(--color-darker-gray);
+  }
+
+  .header > .main-header {
+    border-bottom: none;
+  }
+
+  .header-close-nav {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .header-nav {
+    gap: 9rem;
+    padding: 1rem;
+  }
+
+  .header-nav > .nav-item {
+    font-size: 1.75rem;
+  }
+}

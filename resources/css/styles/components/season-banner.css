@@ -1,0 +1,157 @@
+.banner-season {
+  position: relative;
+  max-height: 100vh;
+  background: url("../../assets/images/banner_season.png") no-repeat center
+    center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  padding: 10rem;
+}
+
+.banner-season .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.banner-season_info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem;
+  color: var(--color-white);
+  z-index: 2;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.banner-season_info_discount {
+  font-size: 3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.banner-season_info_title {
+  font-size: 6rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.banner-season_info_description {
+  font-size: 2.4rem;
+  margin-bottom: 1rem;
+  max-width: 70%;
+  text-wrap: wrap;
+}
+
+.banner-season_btn {
+  padding: 1.75rem;
+  margin-top: 2rem;
+  box-sizing: border-box;
+  border: solid 1px var(--color-white);
+  border-radius: 1rem;
+  color: var(--color-white);
+  background-color: transparent;
+  transition: all 0.3s;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  font-size: 1.75rem;
+}
+
+.banner-season_btn {
+  width: 15%;
+  padding: 1.75rem;
+  margin: 2rem;
+  box-sizing: border-box;
+  border: solid 1px var(--color-primary);
+  border-radius: 1rem;
+  color: var(--color-white);
+  background-color: transparent;
+  transition: all 0.3s;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  font-size: 1.75rem;
+  background-color: var(--color-primary);
+}
+.banner-season_btn:hover {
+  background-color: transparent;
+  border: solid 1px var(--color-white);
+  color: var(--color-white);
+}
+
+/* --- Para pantallas menores a 768px (tabletas y móviles) --- */
+@media (max-width: 768px) {
+  .banner-season {
+    padding: 5rem 2rem; /* Reduce el padding general */
+    max-height: auto; /* La altura se adapta al contenido */
+    background-size: cover; /* Asegura que la imagen de fondo se ajuste al tamaño */
+  }
+
+  .banner-season_info {
+    padding: 2rem; /* Reduce el padding interno */
+    align-items: center; /* Centra la información */
+    text-align: center; /* Centra el texto */
+  }
+
+  .banner-season_info_discount {
+    font-size: 2.5rem; /* Reduce el tamaño de la fuente */
+  }
+
+  .banner-season_info_title {
+    font-size: 4rem; /* Reduce el tamaño de la fuente */
+  }
+
+  .banner-season_info_description {
+    font-size: 1.8rem; /* Reduce el tamaño de la fuente */
+    max-width: 90%; /* Asegura que el texto no sea muy ancho */
+  }
+
+  .banner-season_btn {
+    width: 100%; /* El botón ocupa el ancho completo */
+    font-size: 1.6rem; /* Reduce el tamaño de la fuente */
+    padding: 1.5rem; /* Ajuste del padding */
+  }
+}
+
+/* --- Para pantallas menores a 1024px (tabletas horizontales) --- */
+@media (max-width: 1024px) {
+  .banner-season {
+    padding: 7rem 3rem; /* Reduce el padding general */
+    max-height: auto; /* Se adapta al contenido */
+    background-size: cover; /* La imagen de fondo se adapta al tamaño */
+  }
+
+  .banner-season_info {
+    padding: 3rem; /* Se reduce un poco el padding */
+    align-items: center; /* Centra la información */
+    text-align: center; /* Centra el texto */
+  }
+
+  .banner-season_info_discount {
+    font-size: 2.8rem; /* Se reduce el tamaño de la fuente */
+  }
+
+  .banner-season_info_title {
+    font-size: 5rem; /* Se reduce el tamaño de la fuente */
+  }
+
+  .banner-season_info_description {
+    font-size: 2rem; /* Se reduce el tamaño de la fuente */
+    max-width: 80%; /* Asegura que el texto no sea demasiado ancho */
+  }
+
+  .banner-season_btn {
+    width: 30%; /* El botón ocupa el ancho completo */
+    font-size: 1.75rem; /* Se mantiene el tamaño de la fuente */
+    padding: 1rem; /* Se ajusta el padding */
+  }
+}
