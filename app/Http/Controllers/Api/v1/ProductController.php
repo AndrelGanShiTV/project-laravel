@@ -182,6 +182,7 @@ class ProductController extends Controller
 
         $products = $query->paginate();
 
-        return response()->json($products, 200);
+        // return response()->json($products, 200);
+        return view('Shop', ['products' => $products]);
     }
 }
