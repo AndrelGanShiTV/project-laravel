@@ -12,6 +12,9 @@ class Filters extends Component
 {
     public $products;
     public $colors;
+    public $sizes;
+    public $brands;
+    public $categories;
     /**
      * Create a new component instance.
      */
@@ -21,6 +24,9 @@ class Filters extends Component
     {
         $this->products = $product::with('ProductVariant');
         $this->colors = ProductVariant::select('Color')->distinct()->get();
+        $this->sizes = ProductVariant::select('Size')->distinct()->get();
+        $this->brands = Product::select('Brand')->distinct()->get();
+        $this->categories = Product::select('Category')->distinct()->get();
     }
     /**
      * Get the view / contents that represent the component.

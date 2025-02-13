@@ -12,9 +12,9 @@
     <section class="shop-filters-size">
         <h3 class="shop-filters-size-title">Size</h3>
         <div class="shop-filters-size-list">
-            @foreach (['S','M','L','XL'] as $item)
-            <a href="{{ route('shop', ['size' => $item]) }}">
-                <div class="shop-filters-size-item">{{ $item }}</div>
+            @foreach ($sizes as $size)
+            <a href="{{ route('shop', ['size' => $size->Size]) }}">
+                <div class="shop-filters-size-item">{{ $size->Size }}</div>
             </a>
             @endforeach
         </div>
@@ -34,33 +34,34 @@
     <section class="shop-filters-prices">
         <h3 class="shop-filters-prices-title">Prices</h3>
         <ul class="shop-filters-prices-list">
-            <li class="shop-filters-prices-item">$0-$50</li>
-            <li class="shop-filters-prices-item">$50-$100</li>
-            <li class="shop-filters-prices-item">$100-$200</li>
-            <li class="shop-filters-prices-item">$200-$400</li>
+            @for ($i = 0; $i < 400000; $i=$i+100000) <a
+                href="{{ route('shop', ['min_price' => $i, 'max_price' => $i+100000]) }}">
+                <li class="shop-filters-prices-item">{{'$'.str($i).' - '.'$'.str($i+100000)}}</li>
+                </a>
+                @endfor
         </ul>
     </section>
     <section class="shop-filters-brands">
         <h3 class="shop-filters-brands-title">Brands</h3>
         <ul class="shop-filters-brands-list">
-            <li class="shop-filters-brands-item">Minimog</li>
-            <li class="shop-filters-brands-item">Retrolie</li>
-            <li class="shop-filters-brands-item">Brook</li>
-            <li class="shop-filters-brands-item">Learts</li>
-            <li class="shop-filters-brands-item">Vagabond</li>
-            <li class="shop-filters-brands-item">Abby</li>
+            @foreach ($brands as $brand)
+            <a href="{{ route('shop', ['brand' => $brand->Brand]) }}">
+                <li class="shop-filters-brands-item">{{$brand->Brand}}</li>
+            </a>
+            @endforeach
         </ul>
     </section>
     <section class="shop-filters-collections">
-        <h3 class="shop-filters-collections-title">Collections</h3>
+        <h3 class="shop-filters-collections-title">Categories</h3>
         <ul class="shop-filters-collections-list">
-            <li class="shop-filters-collections-item">All products</li>
-            <li class="shop-filters-collections-item">Best sellers</li>
-            <li class="shop-filters-collections-item">New arrivals</li>
-            <li class="shop-filters-collections-item">Accesories</li>
+            @foreach ($categories as $category)
+            <a href="{{ route('shop', ['category' => $category->Category]) }}">
+                <li class="shop-filters-collections-item">{{$category->Category}}</li>
+            </a>
+            @endforeach
         </ul>
     </section>
-    <section class="shop-filters-tags">
+    {{-- <section class="shop-filters-tags">
         <h3 class="shop-filters-tags-title">Tags</h3>
         <ul class="shop-filters-tags-list">
             <li class="shop-filters-tags-item">Fashion</li>
@@ -75,5 +76,5 @@
             <li class="shop-filters-tags-item">Sunglasses</li>
             <li class="shop-filters-tags-item">Beachwear</li>
         </ul>
-    </section>
+    </section> --}}
 </section>

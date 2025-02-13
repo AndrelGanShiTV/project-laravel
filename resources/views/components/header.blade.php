@@ -40,7 +40,11 @@
     </div>
 
     <nav class="header-nav" id="header-nav">
-        @foreach (["women","men","kids","accesories","about us","news","contact us"] as $item)
+        @foreach (["women","men"] as $item)
+        <a href="{{route('shop', ['category'=> $item.' fashion'])}}" class="nav-item">{{
+            $item }}</a>
+        @endforeach
+        @foreach (["kids","accesories","about us","news","contact us"] as $item)
         <a href="" class="nav-item">{{ $item }}</a>
         @endforeach
         <button class="header-close-nav" id="header-close-nav">

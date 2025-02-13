@@ -50,7 +50,17 @@ class ProductController extends Controller
     {
         try {
             $product = Product::findOrFail($id);
-            return response()->json($product, 200);
+            $stock = $product->ProductVariant->sum('stock');
+            $discountPercentage = 33;
+            $discountedPrice = $product->Price - ($product->Price * ($discountPercentage / 100));
+            $size = $product->ProductVariant->pluck('size')->unique();
+            // return response()->json($product, 200);
+            return view('Product', [
+                'product' => $product,
+                'discountedPrice' => $discountedPrice,
+                'discountPercentage' => $discountPercentage,
+                'stock' => $stock
+            ]);
         } catch (ModelNotFoundException $e) {
 
             Log::error('Error Getting Product: ' . $e->getMessage(), [
@@ -159,13 +169,6 @@ class ProductController extends Controller
             $query->where('Price', '<=', $request->input('max_price'));
         }
 
-        if ($request->has('attributes') && $request->has('value')) {
-            $attributes = $request->input('attributes');
-            $values = $request->input('value');
-
-            $query->whereJsonContains('OtherAttributes->' . $attributes, $values);
-        }
-
         if ($request->has('color')) {
             $color = $request->input('color');
             $query->whereHas('ProductVariant', function (Builder $q) use ($color) {
@@ -178,6 +181,16 @@ class ProductController extends Controller
             $query->whereHas('ProductVariant', function (Builder $q) use ($size) {
                 $q->where('size', $size);
             });
+        }
+
+        if ($request->has('brand')) {
+            $brand = $request->input('brand');
+            $query->where('brand', $brand);
+        }
+
+        if ($request->has('category')) {
+            $category = $request->input('category');
+            $query->where('category', $category);
         }
 
         $products = $query->paginate();

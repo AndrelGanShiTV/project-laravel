@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('ProductName');
             $table->string('ProductDescription')->nullable();
             $table->integer('Price');
-            $table->json('OtherAttributes')->nullable();
+            $table->string('Category');
+            $table->string('Brand');
             $table->timestamps();
         });
     }

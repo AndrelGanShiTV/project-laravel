@@ -16,12 +16,8 @@ class ProductFactory extends Factory
             'ProductName' => $this->faker->word(),
             'ProductDescription' => $this->faker->text,
             'Price' => $this->faker->randomFloat(0, 20000, 200000),
-            'OtherAttributes' => json_encode([
-                'weight' => $this->faker->numberBetween(5, 1000) . 'g',
-                'material' => $this->faker->word,
-                'brand' => $this->faker->randomElement(['Minimog', 'Retrolie', 'Brook', 'Learts', 'Vagabond', 'Abby']),
-                'category' => $this->faker->randomElement(['men fashion', 'women fashion', 'women accesories', 'men accesories', 'discount deals']),
-            ])
+            'Brand' => $this->faker->randomElement(['Minimog', 'Retrolie', 'Brook', 'Learts', 'Vagabond', 'Abby']),
+            'Category' => $this->faker->randomElement(['men fashion', 'women fashion', 'women accesories', 'men accesories', 'discount deals'])
         ];
     }
 }

@@ -14,7 +14,8 @@ class Product extends Model
         'ProductName',
         'ProductDescription',
         'Price',
-        'OtherAttributes',
+        'Category',
+        'Brand'
     ];
 
     public function ProductVariant()

@@ -7,7 +7,7 @@ use App\Http\Controllers\Api\v1\ProductController;
 
 Route::get('/', function () {
     return view('Home');
-});
+})->name('home');
 
 // Route::get('/shop', function () {
 //     return view('Shop');
@@ -22,3 +22,5 @@ Route::get('/cart', function () {
 Route::get('/checkout', function () {
     return view('Checkout');
 });
+
+Route::get('/product/{id}', [ProductController::class, 'show'])->name('product');
